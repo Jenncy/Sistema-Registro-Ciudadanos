@@ -1,60 +1,140 @@
-# CodeIgniter 4 Framework
+# Sistema de Registro de Ciudadanos
 
-## What is CodeIgniter?
+Aplicación web desarrollada con **CodeIgniter 4** para administrar información de ciudadanos y catálogos territoriales/académicos relacionados.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Funcionalidades principales
 
-This repository holds the distributable version of the framework.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+El sistema incluye operaciones **CRUD** para los siguientes módulos:
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+- Ciudadanos
+- Niveles académicos
+- Municipios
+- Departamentos
+- Regiones
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+## Tecnologías y requisitos previos
 
-## Important Change with index.php
+| Componente | Requisito |
+| --- | --- |
+| Lenguaje | PHP **8.1+** |
+| Framework | CodeIgniter 4 |
+| Gestor de dependencias | Composer |
+| Base de datos recomendada | MySQL/MariaDB |
+| Extensiones PHP obligatorias | `intl`, `mbstring` |
+| Servidor | Apache/Nginx o servidor de desarrollo de CodeIgniter |
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+## Instalación desde cero
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/Jenncy/Sistema-Registro-Ciudadanos.git
+   ```
+2. Entrar al directorio del proyecto:
+   ```bash
+   cd Sistema-Registro-Ciudadanos
+   ```
+3. Instalar dependencias:
+   ```bash
+   composer install
+   ```
+4. Crear el archivo de entorno a partir del ejemplo:
+   ```bash
+   cp "env copy" .env
+   ```
+5. Editar `.env` y configurar:
+   - `app.baseURL` (por ejemplo: `http://localhost:8080/`)
+   - Credenciales de base de datos (`database.default.*`)
+6. Crear/configurar la base de datos usando los recursos disponibles en `app/Database` (migraciones o scripts que se incorporen al proyecto).
+7. Levantar el servidor de desarrollo:
+   ```bash
+   php spark serve
+   ```
+8. Abrir la aplicación en:
+   - `http://localhost:8080`
 
-**Please** read the user guide for a better explanation of how CI4 works!
+## Estructura relevante del proyecto
 
-## Repository Management
+```text
+Sistema-Registro-Ciudadanos/
+├── app/                 # Lógica de aplicación (controladores, modelos, vistas, config)
+│   └── Database/        # Migrations y Seeds
+├── public/              # Punto de entrada web (document root)
+├── system/              # Núcleo de CodeIgniter 4
+├── tests/               # Pruebas automatizadas
+├── writable/            # Cache, logs, sesiones y archivos temporales
+├── spark                # CLI de CodeIgniter
+├── composer.json        # Dependencias y scripts
+└── phpunit.xml.dist     # Configuración base de PHPUnit
+```
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+## Rutas y módulos disponibles
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+Rutas definidas actualmente en `app/Config/Routes.php`:
 
-## Contributing
+### Consulta/listado
 
-We welcome contributions from the community.
+- `GET /ver_niveles`
+- `GET /ver_ciudadanos`
+- `GET /ver_municipios`
+- `GET /ver_departamentos`
+- `GET /ver_regiones`
 
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md) section in the development repository.
+### Niveles académicos
 
-## Server Requirements
+- `GET /insertar_nivel`
+- `GET /actualizar_nivel/{id}`
+- `GET /eliminar_nivel/{id}`
+- `POST /guardar_nivel`
+- `POST /modificar_nivel`
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+### Ciudadanos
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+- `GET /insertar_ciudadano`
+- `GET /actualizar_ciudadano/{id}`
+- `GET /eliminar_ciudadano/{id}`
+- `POST /guardar_ciudadano`
+- `POST /modificar_ciudadano`
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+### Municipios
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+- `GET /insertar_municipio`
+- `GET /actualizar_municipio/{id}`
+- `GET /eliminar_municipio/{id}`
+- `POST /guardar_municipio`
+- `POST /modificar_municipio`
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+### Departamentos
+
+- `GET /insertar_departamento`
+- `GET /actualizar_departamento/{id}`
+- `GET /eliminar_departamento/{id}`
+- `POST /guardar_departamento`
+- `POST /modificar_departamento`
+
+### Regiones
+
+- `GET /insertar_region`
+- `GET /actualizar_region/{id}`
+- `GET /eliminar_region/{id}`
+- `POST /guardar_region`
+- `POST /modificar_region`
+
+## Pruebas
+
+Puedes ejecutar las pruebas con cualquiera de estos comandos:
+
+```bash
+composer test
+# o
+vendor/bin/phpunit
+```
+
+## Seguridad
+
+- No subas el archivo `.env` al repositorio.
+- Configura el servidor web para exponer únicamente `public/` como document root.
+- Cambia credenciales por defecto antes de desplegar en ambientes compartidos o productivos.
+
+## Licencia
+
+Este proyecto se distribuye bajo licencia **MIT**.
